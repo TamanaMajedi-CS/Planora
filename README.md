@@ -1,16 +1,57 @@
-# React + Vite
+Planora — Micro-Business Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Planora helps you draft a tiny, actionable business plan in minutes.
+It supports English, Dari, Pashto, RTL layout, dark/light theme, and handy templates for quick starts.
+Backend calls go through a Cloudflare Worker that proxies OpenAI.
 
-Currently, two official plugins are available:
+✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Multilingual UI: English / Dari / Pashto with automatic RTL for fa/ps
 
-## React Compiler
+Theme switcher: Dark / Light (persists, system-aware)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+One-click templates per language
 
-## Expanding the ESLint configuration
+Generates slogans, a one-week plan, product/service copy & next steps
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Export: JSON, CSV, and printable PDF
+
+Responsive layout, accessible controls, keyboard/screen-reader friendly
+
+Clean code: Vite + React + lazy loading + code-splitting
+
+🧱 Tech Stack
+
+Frontend: Vite, React, React Router
+
+Styling: hand-rolled CSS tokens, dark/light theming
+
+API: Cloudflare Worker → OpenAI /chat/completions
+
+Deploy: Vercel (frontend), Cloudflare (API)
+
+🗂 Project Structure
+planora/
+├─ public/
+│ ├─ images/
+│ │ ├─ background.png # hero/background (also usable as favicon)
+│ └─ favicon.ico # add to silence /favicon.ico 404s
+├─ src/
+│ ├─ components/ # BudgetChart, PlanForm, PlanOutput, Footer, ...
+│ ├─ pages/ # Home, About
+│ ├─ lib/ # i18n, schema, prompt, text
+│ ├─ App.jsx # routes
+│ ├─ AppShell.jsx # main planner page
+│ ├─ main.jsx # bootstrapping
+│ └─ styles.css # design system & layout
+├─ api-worker/ # Cloudflare Worker (OpenAI proxy)
+│ └─ src/worker.ts
+├─ vercel.json # SPA rewrites (see below)
+├─ .gitattributes # normalize line endings
+├─ package.json
+└─ README.md
+
+screenshorts:
+![Home page](image.png)
+![Main page](Main.png)
+![About page](About.png)
