@@ -1,0 +1,8 @@
+﻿{
+  "name": "planora-api",
+  "main": "src/worker.ts",
+  "compatibility_date": "2025-10-23",
+  "vars": {
+    "OPENAI_MODEL": "gpt-4o-mini"
+  }
+}
