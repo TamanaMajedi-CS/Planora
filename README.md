@@ -34,8 +34,9 @@ Deploy: Vercel (frontend), Cloudflare (API)
 planora/
 ├─ public/
 │ ├─ images/
-│ │ ├─ background.png # hero/background (also usable as favicon)
-│ └─ favicon.ico # add to silence /favicon.ico 404s
+│ │ ├─ background.png # hero/background
+│ └─ favicon.ico # add to silence /favicon.ico
+│  
 ├─ src/
 │ ├─ components/ # BudgetChart, PlanForm, PlanOutput, Footer, ...
 │ ├─ pages/ # Home, About
