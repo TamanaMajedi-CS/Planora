@@ -53,6 +53,6 @@ planora/
 └─ README.md
 
 screenshorts:
-![Home page](image.png)
+![Home page](Home.png)
 ![Main page](Main.png)
 ![About page](About.png)
