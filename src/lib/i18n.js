@@ -22,6 +22,10 @@ export const STR = {
       addExpense: "+ Add Expense",
       remove: "Remove",
       templates: "Templates",
+      // 🔻 added
+      businessType: "Business type",
+      product: "Product",
+      service: "Service",
     },
     lengths: { planLength: "Plan length", short: "Short", long: "Long" },
     ph: {
@@ -141,6 +145,10 @@ export const STR = {
       addExpense: "+ افزودن هزینه",
       remove: "حذف",
       templates: "قالب‌ها",
+      // 🔻 added
+      businessType: "نوع کسب‌وکار",
+      product: "محصول",
+      service: "خدمت",
     },
     lengths: { planLength: "طول طرح", short: "کوتاه", long: "بلند" },
     ph: {
@@ -259,6 +267,10 @@ export const STR = {
       addExpense: "+ لګښت زیاتول",
       remove: "ایستل",
       templates: "بېلګې",
+      // 🔻 added
+      businessType: "د کاروبار ډول",
+      product: "محصول",
+      service: "خدمت",
     },
     lengths: { short: "لنډ", long: "اوږد" },
     ph: {

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 
 export default function PlanForm({
   state,
   setState,
   onGenerate,
   loading,
-  disableGenerate,
+  disableGenerate,   
   i18n,
   hideLanguageSelect = false,
 }) {
@@ -46,6 +46,21 @@ export default function PlanForm({
       "Fill required: Business Name or we'll suggest one, Category, Target Customer.",
   };
 
+  // show validation UI after first attempt
+  const [showErrors, setShowErrors] = useState(false);
+
+  // compute which required fields are empty
+  const missing = useMemo(() => {
+    const m = [];
+    if (!state.category?.trim()) m.push("category");
+    if (!state.targetCustomer?.trim()) m.push("targetCustomer");
+    if (state.businessType !== "service") {
+      const first = state.products?.[0]?.name ?? "";
+      if (!first.trim()) m.push("product0");
+    }
+    return m;
+  }, [state]);
+
   const update = (k, v) => setState((prev) => ({ ...prev, [k]: v }));
   const updateArray = (key, idx, field, value) => {
     setState((prev) => {
@@ -67,6 +82,16 @@ export default function PlanForm({
           : [],
       };
     });
+  };
+
+  // click handler that allows showing errors even when invalid
+  const handleGenerate = () => {
+    // reveal error UI
+    setShowErrors(true);
+    // if anything is missing, don't submit
+    if (missing.length > 0) return;
+    // otherwise proceed
+    onGenerate();
   };
 
   return (
@@ -91,6 +116,8 @@ export default function PlanForm({
             value={state.category}
             onChange={(e) => update("category", e.target.value)}
             disabled={loading}
+            className={showErrors && missing.includes("category") ? "input--error" : undefined}
+            aria-invalid={showErrors && missing.includes("category") ? "true" : "false"}
           />
         </label>
 
@@ -111,6 +138,10 @@ export default function PlanForm({
             value={state.targetCustomer}
             onChange={(e) => update("targetCustomer", e.target.value)}
             disabled={loading}
+            className={
+              showErrors && missing.includes("targetCustomer") ? "input--error" : undefined
+            }
+            aria-invalid={showErrors && missing.includes("targetCustomer") ? "true" : "false"}
           />
         </label>
 
@@ -168,6 +199,12 @@ export default function PlanForm({
                 value={p.name}
                 onChange={(e) => updateArray("products", i, "name", e.target.value)}
                 disabled={loading}
+                className={
+                  showErrors && i === 0 && missing.includes("product0")
+                    ? "input--error"
+                    : undefined
+                }
+                aria-invalid={showErrors && i === 0 && missing.includes("product0") ? "true" : "false"}
               />
               <input
                 type="number"
@@ -253,11 +290,17 @@ export default function PlanForm({
       </label>
 
       <div className="actions">
-        <button onClick={onGenerate} disabled={loading || disableGenerate}>
-          {loading ? L.loading : L.generate}
-        </button>
-        {disableGenerate && !loading && (
-          <div style={{ marginTop: 8, fontSize: 12, opacity: 0.8 }}>
+        {/* a bit of spacing from the textarea */}
+        <div className="btn-row">
+          {/* only disable while loading; validation handled in handler */}
+          <button onClick={handleGenerate} disabled={loading}>
+            {loading ? L.loading : L.generate}
+          </button>
+        </div>
+
+        {/* show the red hint ONLY after a submit attempt & something missing */}
+        {showErrors && missing.length > 0 && (
+          <div className="help-error" role="alert" aria-live="assertive">
             {L.errorFill}
           </div>
         )}

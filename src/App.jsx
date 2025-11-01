@@ -1,8 +1,7 @@
-// src/App.jsx
 import React, { useEffect, useMemo, useState, Suspense } from "react";
 import { Routes, Route, NavLink, Outlet } from "react-router-dom";
 
-// Lazy-load AppShell so the hover prefetch actually splits the chunk
+
 const AppShell = React.lazy(() => import("./AppShell.jsx"));
 
 import Home from "./pages/Home.jsx";
@@ -28,26 +27,24 @@ function ThemeToggle({ theme, setTheme }) {
   );
 }
 
-function LanguageSelect({ language, setLanguage, T }) {
+// NOTE: no label text; styled like a ghost button
+function LanguageSelect({ language, setLanguage }) {
   return (
-    <label style={{ display: "flex", alignItems: "center", gap: 6 }}>
-      <span style={{ color: "var(--muted)", fontSize: 14 }}>
-        {T.labels?.language || "Language"}
-      </span>
-      <select
-        value={language}
-        onChange={(e) => setLanguage(e.target.value)}
-        aria-label={T.labels?.language || "Language"}
-      >
-        <option value="English">{T.lang?.en || "English"}</option>
-        <option value="Dari">{T.lang?.fa || "Dari"}</option>
-        <option value="Pashto">{T.lang?.ps || "Pashto"}</option>
-      </select>
-    </label>
+    <select
+      className="select--ghost"
+      value={language}
+      onChange={(e) => setLanguage(e.target.value)}
+      aria-label="Language"
+      title="Language"
+    >
+      <option value="English">English</option>
+      <option value="Dari">Dari</option>
+      <option value="Pashto">Pashto</option>
+    </select>
   );
 }
 
-function Navbar({ language, setLanguage, theme, setTheme, T }) {
+function Navbar({ language, setLanguage, theme, setTheme }) {
   return (
     <nav
       className="card"
@@ -66,7 +63,7 @@ function Navbar({ language, setLanguage, theme, setTheme, T }) {
       {/* controls */}
       <div style={{ marginInlineStart: "auto", display: "flex", gap: 10, alignItems: "center" }}>
         <ThemeToggle theme={theme} setTheme={setTheme} />
-        <LanguageSelect language={language} setLanguage={setLanguage} T={T} />
+        <LanguageSelect language={language} setLanguage={setLanguage} />
       </div>
     </nav>
   );
@@ -112,7 +109,6 @@ function RootLayout() {
         setLanguage={setLanguage}
         theme={theme}
         setTheme={setTheme}
-        T={T}
       />
 
       {/* page content */}
@@ -121,7 +117,7 @@ function RootLayout() {
         <Outlet context={outletCtx} key={language} />
       </div>
 
-      {/* 🔻 footer belongs HERE so it shows on every page, at the bottom */}
+      {/* footer on every page */}
       <Footer
         appName="Planora"
         author="Your Name"

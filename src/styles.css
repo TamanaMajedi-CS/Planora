@@ -85,6 +85,20 @@ nav a.active{ background:#0f1116; border-color:var(--accent); color:var(--accent
 :root[data-theme="light"] nav a:hover{ background:#eef2f7; border-color:var(--border) }
 :root[data-theme="light"] nav a.active{ background:#eef2f7; border-color:var(--accent); color:var(--accent) }
 
+/* Ghost-styled select to match .btn--ghost (blue dashed border) */
+.select--ghost{
+  background: transparent;
+  color: var(--accent);
+  border: 1px dashed var(--accent);
+  border-radius: 10px;
+  padding: 8px 12px;
+  height: 36px;
+  outline: none;
+  cursor: pointer;
+}
+.select--ghost:hover{ background: rgba(132,210,255,.08) }
+.select--ghost:focus-visible{ box-shadow: 0 0 0 3px rgba(132,210,255,.25) }
+
 /* =======================================================================
    FORMS
    ======================================================================= */
@@ -133,8 +147,20 @@ button:focus-visible, .btn:focus-visible{
 :root[data-theme="light"] .btn--secondary{
   background:#eef2f7; color:var(--accent); border:1px solid var(--accent);
 }
-.btn--secondary:hover{ filter:none; background:#121621 }
-:root[data-theme="light"] .btn--secondary:hover{ background:#e7ecf4 }
+
+/* >>> Stronger hover for Export PDF (secondary button) <<< */
+.btn--secondary:hover{
+  filter:brightness(1.06);
+  background:#121621;
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(132,210,255,.18);
+}
+:root[data-theme="light"] .btn--secondary:hover{
+  filter:brightness(1.03);
+  background:#e7ecf4;
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(0,121,166,.18);
+}
 
 .btn--ghost{
   background:transparent; color:var(--accent); border:1px dashed var(--accent);
@@ -179,7 +205,7 @@ button:focus-visible, .btn:focus-visible{
    ======================================================================= */
 .templates-row{
   display:grid;
-  grid-template-columns:auto 1fr; 
+  grid-template-columns:auto 1fr;
   grid-template-areas:"label chips";
   align-items:center;
   gap:12px;
@@ -196,14 +222,28 @@ button:focus-visible, .btn:focus-visible{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
-  justify-content:flex-start;  
+  justify-content:flex-start;
 }
 .templates-chips .btn{
-  padding:6px 12px;         
+  padding:6px 12px;
   border-radius:12px;
   line-height:1.1;
 }
 .templates-chips .btn:last-child{ margin-inline-start:8px }
+/* --- form validation + spacing helpers --- */
+.btn-row{ margin-top:10px; }
+
+.input--error{
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 3px rgba(226,61,61,.20) !important;
+}
+
+.help-error{
+  color: var(--danger);
+  margin-top: 8px;
+  font-size: 12px;
+}
+
 
 /* =======================================================================
    OVERLAY + FANCY LOADER
@@ -262,7 +302,6 @@ button:focus-visible, .btn:focus-visible{
    HOME
    ======================================================================= */
 .home{ display:grid; gap:16px }
-
 
 .hero__inner{
   display:grid;
@@ -426,6 +465,17 @@ button:focus-visible, .btn:focus-visible{
   border-color: var(--accent);
   background: rgba(132,210,255,.08);
   transform: translateY(-1px);
+}
+
+/* Bigger footer icons on large screens */
+@media (min-width: 1100px){
+  .app-footer__links .icon-btn{
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    font-size: 22px;
+  }
+  .app-footer__links{ gap: 18px; }
 }
 
 /* =======================================================================
