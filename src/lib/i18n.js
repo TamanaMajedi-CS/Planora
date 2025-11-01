@@ -6,7 +6,17 @@ export const STR = {
     generate: "Generate Plan",
     retry: "Retry",
     clear: "Clear",
-    errorFill: "Fill required fields to continue.",
+    generating: "Generating",
+    pleaseWait: "Please wait…",
+    nav: { home: "Home", main: "Main", about: "About" },
+    // 🔻 NEW: theme strings
+    theme: {
+      light: "Light",
+      dark: "Dark",
+      toLight: "Switch to light theme",
+      toDark: "Switch to dark theme",
+    },
+    export: { json: "Export JSON", csv: "Export CSV", pdf: "Export PDF", print: "Print / Save PDF" },
     sections: { inputs: "Business Inputs" },
     labels: {
       businessName: "Business Name",
@@ -22,10 +32,10 @@ export const STR = {
       addExpense: "+ Add Expense",
       remove: "Remove",
       templates: "Templates",
-      // 🔻 added (already present)
       businessType: "Business type",
       product: "Product",
       service: "Service",
+      notes: "Notes (anything else)",
     },
     lengths: { planLength: "Plan length", short: "Short", long: "Long" },
     ph: {
@@ -39,10 +49,10 @@ export const STR = {
       priceOpt: "Price (optional)",
       expenseName: "Expense name…",
       amount: "Amount",
+      notes: "Any extra info or preferences…",
     },
     lang: { en: "English", fa: "Dari", ps: "Pashto" },
 
-    // 🔻 NEW: localized errors
     errors: {
       heading: "Something went wrong",
       timeout: "The server took too long to respond. Please try again.",
@@ -53,7 +63,6 @@ export const STR = {
       offline: "You’re offline. Some features won’t work.",
     },
 
-    // 🔻 NEW: Output section labels
     output: {
       title: "Your Planora Output",
       slogans: "Slogans",
@@ -68,7 +77,6 @@ export const STR = {
       find: "Find them on",
     },
 
-    // Home
     home: {
       tagline: "A simple micro-business planner for fast, practical action.",
       getStarted: "Open Planner",
@@ -88,14 +96,12 @@ export const STR = {
       how1: "Open the planner and enter your business info.",
       how2: "Click Generate to get a weekly plan and posts.",
       how3: "Edit, export JSON/CSV, and take action.",
-      // NEW
       how3pdf:
         "Edit, export JSON/CSV/PDF, and take action. (PDF gives you a clean, printable version.)",
       openPlanner: "Open Planner",
       about: "About",
       privacyHint: "Data stays in your browser (localStorage).",
 
-      // Gallery
       examplesTitle: "Real micro-business examples",
       exFoodTitle: "Homemade Food",
       exFoodDesc: "Fresh, local meals prepared to order and delivered nearby.",
@@ -111,7 +117,6 @@ export const STR = {
       altCrafts: "Home crafts / beauty micro-business",
     },
 
-    // About
     about: {
       title: "About Planora",
       tagline:
@@ -155,7 +160,17 @@ export const STR = {
     generate: "تولید طرح",
     retry: "تلاش دوباره",
     clear: "پاک کردن",
-    errorFill: "لطفاً فیلدهای ضروری را پُر کنید.",
+    generating: "در حال تولید",
+    pleaseWait: "لطفاً منتظر بمانید…",
+    nav: { home: "خانه", main: "اصلی", about: "درباره" },
+    // 🔻 NEW: theme strings
+    theme: {
+      light: "روشن",
+      dark: "تاریک",
+      toLight: "تغییر به تم روشن",
+      toDark: "تغییر به تم تاریک",
+    },
+    export: { json: "خروجی JSON", csv: "خروجی CSV", pdf: "خروجی PDF", print: "چاپ / ذخیره PDF" },
     sections: { inputs: "ورودی‌های کسب‌وکار" },
     labels: {
       businessName: "نام کسب‌وکار",
@@ -171,10 +186,10 @@ export const STR = {
       addExpense: "+ افزودن هزینه",
       remove: "حذف",
       templates: "قالب‌ها",
-      // 🔻 added (already present)
       businessType: "نوع کسب‌وکار",
       product: "محصول",
       service: "خدمت",
+      notes: "یادداشت‌ها (هر چیز دیگر)",
     },
     lengths: { planLength: "طول طرح", short: "کوتاه", long: "بلند" },
     ph: {
@@ -188,10 +203,10 @@ export const STR = {
       priceOpt: "قیمت (اختیاری)",
       expenseName: "نام هزینه…",
       amount: "مبلغ",
+      notes: "هر اطلاعات یا ترجیح اضافه…",
     },
     lang: { en: "انگلیسی", fa: "دری", ps: "پشتو" },
 
-    // 🔻 NEW: localized errors
     errors: {
       heading: "مشکلی پیش آمد",
       timeout: "پاسخ سرور دیر شد. لطفاً دوباره کوشش کنید.",
@@ -202,7 +217,6 @@ export const STR = {
       offline: "شما آفلاین هستید. برخی قابلیت‌ها کار نخواهد کرد.",
     },
 
-    // 🔻 NEW: Output section labels (Dari)
     output: {
       title: "خروجی پلنورا",
       slogans: "شعارها",
@@ -217,7 +231,6 @@ export const STR = {
       find: "کجا پیدایش کنید",
     },
 
-    // Home
     home: {
       tagline:
         "یک برنامه‌ریز ساده برای کسب‌وکارهای کوچک با اقدام‌های عملی سریع.",
@@ -238,7 +251,6 @@ export const STR = {
       how1: "پلنر را باز کرده و اطلاعات کسب‌وکار را وارد کنید.",
       how2: "روی «تولید طرح» کلیک کنید تا برنامه هفتگی و پست‌ها ساخته شود.",
       how3: "ویرایش کنید، JSON/CSV خروجی بگیرید و اقدام کنید.",
-      // NEW
       how3pdf:
         "ویرایش کنید، خروجی JSON/CSV/PDF بگیرید و اقدام کنید. (PDF نسخهٔ تمیز و قابل چاپ به شما می‌دهد.)",
       openPlanner: "باز کردن پلنر",
@@ -260,7 +272,6 @@ export const STR = {
       altCrafts: "کسب‌وکار خانگی صنایع دستی / زیبایی",
     },
 
-    // About (Dari)
     about: {
       title: "دربارهٔ پلنورا",
       tagline: "یک برنامه‌ریز سبک برای کسب‌وکارهای خرد با گام‌های عملی و محلی.",
@@ -303,7 +314,17 @@ export const STR = {
     generate: "پلان جوړول",
     retry: "بیا هڅه",
     clear: "پاکول",
-    errorFill: "مهرباني وکړئ اړین ځایونه ډک کړئ.",
+    generating: "جوړول روان دي",
+    pleaseWait: "مهرباني وکړئ انتظار وباسئ…",
+    nav: { home: "کور", main: "اصلي", about: "په اړه" },
+    // 🔻 NEW: theme strings
+    theme: {
+      light: "روښانه",
+      dark: "تیاره",
+      toLight: "روښانه بڼې ته واړوئ",
+      toDark: "تیاره بڼه وکاروئ",
+    },
+    export: { json: "د JSON صادرول", csv: "د CSV صادرول", pdf: "د PDF صادرول", print: "چاپ / PDF خوندي کول" },
     sections: { inputs: "د سوداګرۍ ننوتنې" },
     labels: {
       businessName: "د سوداګرۍ نوم",
@@ -319,10 +340,10 @@ export const STR = {
       addExpense: "+ لګښت زیاتول",
       remove: "ایستل",
       templates: "بېلګې",
-      // 🔻 added (already present)
       businessType: "د کاروبار ډول",
       product: "محصول",
       service: "خدمت",
+      notes: "یادښتونه (نور معلومات)",
     },
     lengths: { short: "لنډ", long: "اوږد" },
     ph: {
@@ -336,10 +357,10 @@ export const STR = {
       priceOpt: "د پلور بیه (اختیاري)",
       expenseName: "د لګښت نوم…",
       amount: "مبلغ",
+      notes: "هر اضافي معلومات یا خوښه…",
     },
     lang: { en: "انګلیسي", fa: "دري", ps: "پښتو" },
 
-    // 🔻 NEW: localized errors
     errors: {
       heading: "ستونزه رامنځته شوه",
       timeout: "سرور ځواب و نه کړ. مهرباني وکړئ بیا هڅه وکړئ.",
@@ -350,7 +371,6 @@ export const STR = {
       offline: "تاسو آفلاین یاست. ځینې فیچرونه به کار ونه کړي.",
     },
 
-    // 🔻 NEW: Output section labels (Pashto)
     output: {
       title: "د پلنورا پایله",
       slogans: "شعارونه",
@@ -365,7 +385,6 @@ export const STR = {
       find: "چیرته یې پیدا کړو",
     },
 
-    // Home
     home: {
       tagline: "یو ساده پلانر د وړو کاروبارونو لپاره د چټکو عملي ګامونو سره.",
       getStarted: "پلانر پرانیزئ",
@@ -385,7 +404,6 @@ export const STR = {
       how1: "پلانر پرانیزئ او د خپل کاروبار معلومات ولیکئ.",
       how2: "«پلان جوړول» بټن کېکاږئ تر څو اوونیز پلان او پوسټونه جوړ شي.",
       how3: "سمون ورکړئ، JSON/CSV ښکته کړئ او عمل وکړئ.",
-      // NEW
       how3pdf:
         "سمون ورکړئ، JSON/CSV/PDF صادر کړئ او عمل وکړئ. (PDF درته پاک او د چاپ لپاره مناسب بڼه दरکوي.)",
       openPlanner: "پلانر پرانیزئ",
@@ -407,7 +425,6 @@ export const STR = {
       altCrafts: "په کور کې د لاس‌کړنو/ښکلا کوچنی کاروبار",
     },
 
-    // About (Pashto)
     about: {
       title: "د پلنورا په اړه",
       tagline: "د وړو کاروبارونو لپاره سپک پلانر د عملي او محلي ګامونو سره.",

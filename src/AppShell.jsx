@@ -308,6 +308,7 @@ export default function AppShell() {
     if (!plan) return;
     const win = window.open("", "_blank");
     const title = T.title || "Planora — Micro-Business Planner";
+    const o = T.output || {};
     const html = `
       <html>
         <head>
@@ -329,26 +330,26 @@ export default function AppShell() {
           <div>${state.category} • ${state.location || ""}</div>
 
           <div class="section">
-            <h2>Slogans</h2>
+            <h2>${o.slogans || "Slogans"}</h2>
             <ul>${plan.slogans.map(s=>`<li>${s}</li>`).join("")}</ul>
           </div>
 
           <div class="section">
-            <h2>One-Week Plan</h2>
+            <h2>${o.weekPlan || "One-Week Plan"}</h2>
             <ul>${plan.one_week_plan.daily_actions.map(s=>`<li>${s}</li>`).join("")}</ul>
           </div>
 
           <div class="section">
-            <h2>Product/Service Copy</h2>
+            <h2>${o.productCopy || "Product Copy"}</h2>
             <ul>${plan.product_copy.map(p=>`<li><strong>${p.product}:</strong> ${p.description} <em>${p.cta}</em></li>`).join("")}</ul>
           </div>
 
           <div class="section">
-            <h2>Next Steps</h2>
+            <h2>${o.nextSteps || "Next Steps"}</h2>
             <ul>${plan.next_steps.map(s=>`<li>${s}</li>`).join("")}</ul>
           </div>
 
-          <button class="no-print" onclick="window.print()">Print / Save PDF</button>
+          <button class="no-print" onclick="window.print()">${T.export?.print || "Print / Save PDF"}</button>
         </body>
       </html>
     `;
@@ -487,9 +488,9 @@ export default function AppShell() {
 
       {plan && (
         <div className="card sticky-exports">
-          <button onClick={exportJSON}>Export JSON</button>
-          <button onClick={exportCSV}>Export CSV</button>
-          <button onClick={exportPDF} className="btn--secondary">Export PDF</button>
+          <button onClick={exportJSON}>{T.export?.json || "Export JSON"}</button>
+          <button onClick={exportCSV}>{T.export?.csv || "Export CSV"}</button>
+          <button onClick={exportPDF} className="btn--secondary">{T.export?.pdf || "Export PDF"}</button>
         </div>
       )}
     </div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState, Suspense } from "react";
 import { Routes, Route, NavLink, Outlet } from "react-router-dom";
 
-
 const AppShell = React.lazy(() => import("./AppShell.jsx"));
 
 import Home from "./pages/Home.jsx";
@@ -10,9 +9,14 @@ import { STR, isRTL } from "./lib/i18n.js";
 import Footer from "./components/Footer.jsx";
 
 /** Small reusable controls */
-function ThemeToggle({ theme, setTheme }) {
+function ThemeToggle({ theme, setTheme, T }) {
   const isDark = theme === "dark";
-  const label = isDark ? "Switch to light theme" : "Switch to dark theme";
+  const label = isDark
+    ? (T?.theme?.toLight || "Switch to light theme")
+    : (T?.theme?.toDark || "Switch to dark theme");
+  const btnText = isDark
+    ? `🌞 ${T?.theme?.light || "Light"}`
+    : `🌙 ${T?.theme?.dark || "Dark"}`;
   return (
     <button
       type="button"
@@ -22,48 +26,48 @@ function ThemeToggle({ theme, setTheme }) {
       title={label}
       aria-label={label}
     >
-      {isDark ? "🌞 Light" : "🌙 Dark"}
+      {btnText}
     </button>
   );
 }
 
 // NOTE: no label text; styled like a ghost button
-function LanguageSelect({ language, setLanguage }) {
+function LanguageSelect({ language, setLanguage, T }) {
   return (
     <select
       className="select--ghost"
       value={language}
       onChange={(e) => setLanguage(e.target.value)}
-      aria-label="Language"
-      title="Language"
+      aria-label={T?.labels?.language || "Language"}
+      title={T?.labels?.language || "Language"}
     >
-      <option value="English">English</option>
-      <option value="Dari">Dari</option>
-      <option value="Pashto">Pashto</option>
+      <option value="English">{T?.lang?.en || "English"}</option>
+      <option value="Dari">{T?.lang?.fa || "Dari"}</option>
+      <option value="Pashto">{T?.lang?.ps || "Pashto"}</option>
     </select>
   );
 }
 
-function Navbar({ language, setLanguage, theme, setTheme }) {
+function Navbar({ language, setLanguage, theme, setTheme, T }) {
   return (
     <nav
       className="card"
       aria-label="Main"
       style={{ display: "flex", gap: 12, alignItems: "center" }}
     >
-      <NavLink to="/" end>Home</NavLink>
+      <NavLink to="/" end>{T?.nav?.home || "Home"}</NavLink>
 
       {/* Prefetch the AppShell chunk on hover */}
       <NavLink to="/app" onMouseEnter={() => import("./AppShell.jsx")}>
-        Main
+        {T?.nav?.main || "Main"}
       </NavLink>
 
-      <NavLink to="/about">About</NavLink>
+      <NavLink to="/about">{T?.nav?.about || "About"}</NavLink>
 
       {/* controls */}
       <div style={{ marginInlineStart: "auto", display: "flex", gap: 10, alignItems: "center" }}>
-        <ThemeToggle theme={theme} setTheme={setTheme} />
-        <LanguageSelect language={language} setLanguage={setLanguage} />
+        <ThemeToggle theme={theme} setTheme={setTheme} T={T} />
+        <LanguageSelect language={language} setLanguage={setLanguage} T={T} />
       </div>
     </nav>
   );
@@ -109,6 +113,7 @@ function RootLayout() {
         setLanguage={setLanguage}
         theme={theme}
         setTheme={setTheme}
+        T={T}
       />
 
       {/* page content */}
