@@ -192,60 +192,69 @@ export default function PlanForm({
       {state.businessType !== "service" && (
         <>
           <h3>{L.labels?.products || "Products"}</h3>
-          {state.products.map((p, i) => (
-            <div key={i} className="row">
-              <input
-                placeholder={L.ph?.productName || "Product / service name…"}
-                value={p.name}
-                onChange={(e) => updateArray("products", i, "name", e.target.value)}
-                disabled={loading}
-                className={
-                  showErrors && i === 0 && missing.includes("product0")
-                    ? "input--error"
-                    : undefined
-                }
-                aria-invalid={showErrors && i === 0 && missing.includes("product0") ? "true" : "false"}
-              />
-              <input
-                type="number"
-                placeholder={L.ph?.costOpt || "Cost (optional)"}
-                value={p.cost ?? ""}
-                onChange={(e) =>
-                  updateArray(
-                    "products",
-                    i,
-                    "cost",
-                    e.target.value === "" ? "" : Number(e.target.value)
-                  )
-                }
-                min="0"
-                disabled={loading}
-              />
-              <input
-                type="number"
-                placeholder={L.ph?.priceOpt || "Price (optional)"}
-                value={p.price ?? ""}
-                onChange={(e) =>
-                  updateArray(
-                    "products",
-                    i,
-                    "price",
-                    e.target.value === "" ? "" : Number(e.target.value)
-                  )
-                }
-                min="0"
-                disabled={loading}
-              />
-              <button
-                type="button"
-                className="btn--warn"
-                onClick={() => removeRow("products", i)}
-                disabled={loading}
-              >
-                {L.labels?.remove || "Remove"}
-              </button>
-            </div>
-          ))}
+          {state.products.map((p, i) => {
+            const isSingle = state.products.length === 1;
+            const inputId = `prod-${i}-name`;
+            return (
+              <div key={i} className="row">
+                <input
+                  id={inputId}
+                  placeholder={L.ph?.productName || "Product / service name…"}
+                  value={p.name}
+                  onChange={(e) => updateArray("products", i, "name", e.target.value)}
+                  disabled={loading}
+                  className={
+                    showErrors && i === 0 && missing.includes("product0")
+                      ? "input--error"
+                      : undefined
+                  }
+                  aria-invalid={showErrors && i === 0 && missing.includes("product0") ? "true" : "false"}
+                />
+                <input
+                  type="number"
+                  placeholder={L.ph?.costOpt || "Cost (optional)"}
+                  value={p.cost ?? ""}
+                  onChange={(e) =>
+                    updateArray(
+                      "products",
+                      i,
+                      "cost",
+                      e.target.value === "" ? "" : Number(e.target.value)
+                    )
+                  }
+                  min="0"
+                  disabled={loading}
+                />
+                <input
+                  type="number"
+                  placeholder={L.ph?.priceOpt || "Price (optional)"}
+                  value={p.price ?? ""}
+                  onChange={(e) =>
+                    updateArray(
+                      "products",
+                      i,
+                      "price",
+                      e.target.value === "" ? "" : Number(e.target.value)
+                    )
+                  }
+                  min="0"
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  className={isSingle ? "btn--secondary" : "btn--warn"}
+                  onClick={() =>
+                    isSingle
+                      ? document.getElementById(inputId)?.focus()
+                      : removeRow("products", i)
+                  }
+                  disabled={loading}
+                >
+                  {isSingle ? (i18n?.labels?.edit || "Edit") : (L.labels?.remove || "Remove")}
+                </button>
+              </div>
+            );
+          })}
 
           <button
             type="button"
