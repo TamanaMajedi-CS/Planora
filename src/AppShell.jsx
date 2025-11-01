@@ -199,6 +199,19 @@ export default function AppShell() {
     throw new Error("API error");
   };
 
+  // ---- helper: classify and localize errors
+  const pickErrorMessage = (e, resStatus, bodyText) => {
+    const E = T.errors || {};
+    const text = String(bodyText || e?.message || e || "").toLowerCase();
+
+    if (offline) return E.offline || "You’re offline. Some features won’t work.";
+    if (resStatus === 504 || /timeout/.test(text)) return E.timeout || "The server took too long to respond. Please try again.";
+    if (/cors/.test(text)) return E.cors || "Request was blocked by the browser (CORS). Please refresh and try again.";
+    if (e?.name === "TypeError" && !resStatus) return E.network || "Network error. Check your internet connection and try again.";
+    if (resStatus >= 500) return E.server || "Server error. Please try again.";
+    return E.unknown || "Unexpected error. Please try again.";
+  };
+
   const generate = async () => {
     setLoading(true);
     setError("");
@@ -206,7 +219,7 @@ export default function AppShell() {
 
     if (offline) {
       setLoading(false);
-      setError("You are offline. Please reconnect and try again.");
+      setError(pickErrorMessage(new Error("offline")));
       return;
     }
 
@@ -245,8 +258,9 @@ export default function AppShell() {
         body: JSON.stringify({ messages }),
       });
       if (!res.ok) {
-        const t = await res.text().catch(() => "");
-        throw new Error(`Network error: ${res.status}${t ? ` — ${t}` : ""}`);
+        let txt = "";
+        try { txt = await res.text(); } catch {}
+        throw { status: res.status, message: txt || `HTTP ${res.status}` };
       }
 
       const planString = await mapResponse(res);
@@ -255,7 +269,8 @@ export default function AppShell() {
       setPlan(valid);
     } catch (e) {
       console.error(e);
-      setError(String(e?.message || e));
+      const msg = pickErrorMessage(e, e?.status, e?.message);
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -351,7 +366,7 @@ export default function AppShell() {
 
       {offline && (
         <div className="error" role="alert" style={{ marginBottom: 12 }}>
-          📡 You’re offline. Some features won’t work.
+          📡 {T.errors?.offline || "You’re offline. Some features won’t work."}
         </div>
       )}
 
@@ -396,7 +411,7 @@ export default function AppShell() {
             ))}
 
             <button
-              className="btn btn--secondary"
+              className="btn--secondary"
               onClick={() =>
                 setState({
                   businessName: "",
@@ -431,8 +446,9 @@ export default function AppShell() {
 
       {/* Error */}
       {error && (
-        <div className="error" role="alert" aria-live="assertive">
-          ⚠️ {error} <button onClick={generate}>{T.retry ?? "Retry"}</button>
+        <div className="error" role="alert" aria-live="assertive" style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:12}}>
+          <div>⚠️ <strong>{T.errors?.heading || "Something went wrong"}</strong> — {error}</div>
+          <button onClick={generate} className="btn--secondary">{T.retry ?? "Retry"}</button>
         </div>
       )}
 
@@ -464,7 +480,8 @@ export default function AppShell() {
 
       {plan && (
         <Suspense fallback={<div className="card">Loading plan…</div>}>
-          <PlanOutput plan={plan} i18n={T} />
+          {/* 🔻 only change: pass language */}
+          <PlanOutput plan={plan} i18n={T} language={language} />
         </Suspense>
       )}
 

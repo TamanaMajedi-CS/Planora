@@ -1,5 +1,5 @@
 
-export const STR = {
+export const STR = { 
   English: {
     title: "Planora — Micro-Business Planner",
     loading: "Generating…",
@@ -22,7 +22,7 @@ export const STR = {
       addExpense: "+ Add Expense",
       remove: "Remove",
       templates: "Templates",
-      // 🔻 added
+      // 🔻 added (already present)
       businessType: "Business type",
       product: "Product",
       service: "Service",
@@ -41,6 +41,32 @@ export const STR = {
       amount: "Amount",
     },
     lang: { en: "English", fa: "Dari", ps: "Pashto" },
+
+    // 🔻 NEW: localized errors
+    errors: {
+      heading: "Something went wrong",
+      timeout: "The server took too long to respond. Please try again.",
+      network: "Network error. Check your internet connection and try again.",
+      server: "Server error. Please try again.",
+      cors: "Request was blocked by the browser (CORS). Please refresh and try again.",
+      unknown: "Unexpected error. Please try again.",
+      offline: "You’re offline. Some features won’t work.",
+    },
+
+    // 🔻 NEW: Output section labels
+    output: {
+      title: "Your Planora Output",
+      slogans: "Slogans",
+      productCopy: "Product Copy",
+      priceHint: "Price Hint",
+      contentCalendar: "Content Calendar",
+      nextSteps: "Next Steps",
+      weekPlan: "One-Week Plan",
+      quickWins: "Quick wins",
+      persona: "Customer Persona",
+      needs: "Needs",
+      find: "Find them on",
+    },
 
     // Home
     home: {
@@ -145,7 +171,7 @@ export const STR = {
       addExpense: "+ افزودن هزینه",
       remove: "حذف",
       templates: "قالب‌ها",
-      // 🔻 added
+      // 🔻 added (already present)
       businessType: "نوع کسب‌وکار",
       product: "محصول",
       service: "خدمت",
@@ -164,6 +190,32 @@ export const STR = {
       amount: "مبلغ",
     },
     lang: { en: "انگلیسی", fa: "دری", ps: "پشتو" },
+
+    // 🔻 NEW: localized errors
+    errors: {
+      heading: "مشکلی پیش آمد",
+      timeout: "پاسخ سرور دیر شد. لطفاً دوباره کوشش کنید.",
+      network: "خطای شبکه. ارتباط اینترنت خود را بررسی کرده و دوباره کوشش کنید.",
+      server: "خطای سرور. لطفاً دوباره کوشش کنید.",
+      cors: "درخواست توسط مرورگر مسدود شد (CORS). صفحه را تازه‌سازی کرده و دوباره امتحان کنید.",
+      unknown: "خطای غیرمنتظره. لطفاً دوباره کوشش کنید.",
+      offline: "شما آفلاین هستید. برخی قابلیت‌ها کار نخواهد کرد.",
+    },
+
+    // 🔻 NEW: Output section labels (Dari)
+    output: {
+      title: "خروجی پلنورا",
+      slogans: "شعارها",
+      productCopy: "متن محصول",
+      priceHint: "اشارهٔ قیمت‌گذاری",
+      contentCalendar: "تقویم محتوا",
+      nextSteps: "گام‌های بعدی",
+      weekPlan: "پلان یک‌هفته‌ای",
+      quickWins: "موفقیت‌های سریع",
+      persona: "پرسونای مشتری",
+      needs: "نیازها",
+      find: "کجا پیدایش کنید",
+    },
 
     // Home
     home: {
@@ -267,7 +319,7 @@ export const STR = {
       addExpense: "+ لګښت زیاتول",
       remove: "ایستل",
       templates: "بېلګې",
-      // 🔻 added
+      // 🔻 added (already present)
       businessType: "د کاروبار ډول",
       product: "محصول",
       service: "خدمت",
@@ -286,6 +338,32 @@ export const STR = {
       amount: "مبلغ",
     },
     lang: { en: "انګلیسي", fa: "دري", ps: "پښتو" },
+
+    // 🔻 NEW: localized errors
+    errors: {
+      heading: "ستونزه رامنځته شوه",
+      timeout: "سرور ځواب و نه کړ. مهرباني وکړئ بیا هڅه وکړئ.",
+      network: "د شبکې ستونزه. خپله انټرنټ اړیکه وګورئ او بیا هڅه وکړئ.",
+      server: "د سرور ستونزه. مهرباني وکړئ بیا هڅه وکړئ.",
+      cors: "درخواست د براوزر لخوا بند شو (CORS). پاڼه تازه کړئ او بیا هڅه وکړئ.",
+      unknown: "ناڅاپي ستونزه. مهرباني وکړئ بیا هڅه وکړئ.",
+      offline: "تاسو آفلاین یاست. ځینې فیچرونه به کار ونه کړي.",
+    },
+
+    // 🔻 NEW: Output section labels (Pashto)
+    output: {
+      title: "د پلنورا پایله",
+      slogans: "شعارونه",
+      productCopy: "د محصول متن",
+      priceHint: "د بیې اشاره",
+      contentCalendar: "د منځپانګې کلینډر",
+      nextSteps: "راتلونکي ګامونه",
+      weekPlan: "د یوې اوونۍ پلان",
+      quickWins: "ژر بریاوې",
+      persona: "د مشتری شخصیت",
+      needs: "اړتیاوې",
+      find: "چیرته یې پیدا کړو",
+    },
 
     // Home
     home: {
@@ -309,7 +387,7 @@ export const STR = {
       how3: "سمون ورکړئ، JSON/CSV ښکته کړئ او عمل وکړئ.",
       // NEW
       how3pdf:
-        "سمون ورکړئ، JSON/CSV/PDF صادر کړئ او عمل وکړئ. (PDF درته پاک او د چاپ لپاره مناسب بڼه درکوي.)",
+        "سمون ورکړئ، JSON/CSV/PDF صادر کړئ او عمل وکړئ. (PDF درته پاک او د چاپ لپاره مناسب بڼه दरکوي.)",
       openPlanner: "پلانر پرانیزئ",
       about: "په اړه",
       privacyHint: "ډاټا ستاسو په براوزر کې پاتې کېږي (localStorage).",

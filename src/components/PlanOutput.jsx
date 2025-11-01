@@ -1,11 +1,11 @@
-
 import React from "react";
 import { stripEnglishPrefixes } from "../lib/text.js";
+import { STR } from "../lib/i18n.js";
 
 export default function PlanOutput({ plan, i18n, language = "English" }) {
-  const L = i18n || {};
+  
+  const L = (STR && STR[language]) || i18n || {};
   const clean = (x) => (typeof x === "string" ? stripEnglishPrefixes(x, language) : x);
-
 
   const slogans = (plan?.slogans || []).map(clean);
 
@@ -30,8 +30,8 @@ export default function PlanOutput({ plan, i18n, language = "English" }) {
   const persona = {
     name: clean(plan?.customer_persona?.name || ""),
     age_range: clean(plan?.customer_persona?.age_range || ""),
-    needs: (plan?.customer_persona?.needs || []).map(clean), 
-    where_to_find_them: (plan?.customer_persona?.where_to_find_them || []).map(clean), 
+    needs: (plan?.customer_persona?.needs || []).map(clean),
+    where_to_find_them: (plan?.customer_persona?.where_to_find_them || []).map(clean),
   };
 
   return (
