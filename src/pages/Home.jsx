@@ -1,5 +1,3 @@
-
-// src/pages/Home.jsx
 import React from "react";
 import { Link, useOutletContext } from "react-router-dom";
 
@@ -42,9 +40,9 @@ export default function Home() {
               {H.demoTitle || "Try a quick example"}
             </div>
             <ul className="hero__demoList" role="list">
-              <li>• {H.exFoodTitle || "Homemade Food"}</li>
-              <li>• {H.exTailorTitle || "Tailoring"}</li>
-              <li>• {H.exTutorTitle || "Tutoring"}</li>
+              <li>{H.exFoodTitle || "Homemade Food"}</li>
+              <li>{H.exTailorTitle || "Tailoring"}</li>
+              <li>{H.exTutorTitle || "Tutoring"}</li>
             </ul>
             <Link to="/app" className="btn btn--secondary" aria-label="Start demo">
               {H.tryNow || "Try now"}
