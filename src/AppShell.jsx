@@ -1,5 +1,5 @@
 
-import React, { useEffect, useMemo, useState, Suspense } from "react";
+import React, { useEffect, useMemo, useState, Suspense } from "react"; 
 import { useOutletContext, Link } from "react-router-dom";
 import PlanForm from "./components/PlanForm.jsx";
 import { buildPlanoraPrompt } from "./lib/prompt.js";
@@ -12,6 +12,7 @@ const PlanOutput  = React.lazy(() => import("./components/PlanOutput.jsx"));
 const API_BASE = import.meta.env.VITE_API_BASE || "https://planora-api.pollyglot-ai.workers.dev";
 const PUBLIC_HEADERS = {};
 
+// ---------------- utilities ----------------
 function suggestName(category, location) {
   const base = (category || "Business").toString().trim();
   const city = (location || "").toString().trim();
@@ -21,6 +22,60 @@ function suggestName(category, location) {
 }
 function getTemplatesFor(language, TEMPLATES_BY_LANG) {
   return TEMPLATES_BY_LANG[language] || TEMPLATES_BY_LANG.English;
+}
+
+/* ===== Store complete input sets as examples ===== */
+const EXAMPLES_KEY = "planora:savedExamples";
+function loadExamples() {
+  try { return JSON.parse(localStorage.getItem(EXAMPLES_KEY) || "[]"); }
+  catch { return []; }
+}
+function saveExamples(list) {
+  localStorage.setItem(EXAMPLES_KEY, JSON.stringify(list));
+}
+function isCompleteInput(state) {
+  if (!state.category?.trim()) return false;
+  if (!state.targetCustomer?.trim()) return false;
+  if (state.businessType !== "service") {
+    const first = state.products?.[0];
+    if (!first || !first.name?.trim()) return false;
+  }
+  return true;
+}
+function buildExampleSnapshot(s) {
+  const {
+    businessName, category, location, targetCustomer,
+    businessType, detailLevel, language, products, constraints, notes
+  } = s;
+  return {
+    id: `${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
+    ts: Date.now(),
+    businessName,
+    category,
+    location,
+    targetCustomer,
+    businessType,
+    detailLevel,
+    language,
+    products: (products || []).map(p => ({
+      name: p.name, cost: p.cost ?? undefined, price: p.price ?? undefined
+    })),
+    constraints,
+    notes
+  };
+}
+function addExampleIfNew(snapshot) {
+  const list = loadExamples();
+  const isDup = list.some(e =>
+    (e.businessName || "").trim().toLowerCase() === (snapshot.businessName || "").trim().toLowerCase() &&
+    (e.category || "").trim().toLowerCase() === (snapshot.category || "").trim().toLowerCase() &&
+    (e.location || "").trim().toLowerCase() === (snapshot.location || "").trim().toLowerCase() &&
+    (e.businessType || "") === (snapshot.businessType || "")
+  );
+  if (!isDup) {
+    list.unshift(snapshot);
+    saveExamples(list.slice(0, 25)); // keep latest 25
+  }
 }
 
 /* ================= Multilingual Templates ================= */
@@ -183,13 +238,6 @@ export default function AppShell() {
   };
   const disableGenerate = useMemo(() => validate().length > 0, [state]);
 
-  useEffect(() => {
-    const p = localStorage.getItem("planora:lastPlan");
-    if (p) setPlan(JSON.parse(p));
-  }, []);
-  useEffect(() => {
-    if (plan) localStorage.setItem("planora:lastPlan", JSON.stringify(plan));
-  }, [plan]);
 
   const mapResponse = async (res) => {
     const data = await res.json();
@@ -230,12 +278,19 @@ export default function AppShell() {
       return;
     }
 
+  
     const withName = {
       ...state,
       businessName: state.businessName?.trim()
         ? state.businessName.trim()
         : suggestName(state.category, state.location)
     };
+
+    
+    if (isCompleteInput(withName)) {
+      const snap = buildExampleSnapshot(withName);
+      addExampleIfNew(snap);
+    }
 
     try {
       const cleaned = {
@@ -413,7 +468,7 @@ export default function AppShell() {
 
             <button
               className="btn--secondary"
-              onClick={() =>
+              onClick={() => {
                 setState({
                   businessName: "",
                   category: "",
@@ -425,8 +480,12 @@ export default function AppShell() {
                   products: [{ name: "", cost: undefined, price: undefined }],
                   constraints: "",
                   notes: "",
-                })
-              }
+                });
+                // ensure plan is gone after clearing
+                setPlan(null);
+                // legacy key cleanup if it ever existed
+                localStorage.removeItem("planora:lastPlan");
+              }}
             >
               {T.clear || "Clear"}
             </button>
