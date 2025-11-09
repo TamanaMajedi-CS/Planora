@@ -1,5 +1,4 @@
-
-import React, { useEffect, useMemo, useState, Suspense } from "react"; 
+import React, { useEffect, useMemo, useState, Suspense } from "react";
 import { useOutletContext, Link } from "react-router-dom";
 import PlanForm from "./components/PlanForm.jsx";
 import { buildPlanoraPrompt } from "./lib/prompt.js";
@@ -12,7 +11,7 @@ const PlanOutput  = React.lazy(() => import("./components/PlanOutput.jsx"));
 const API_BASE = import.meta.env.VITE_API_BASE || "https://planora-api.pollyglot-ai.workers.dev";
 const PUBLIC_HEADERS = {};
 
-// ---------------- utilities ----------------
+/* ---------------- utilities ---------------- */
 function suggestName(category, location) {
   const base = (category || "Business").toString().trim();
   const city = (location || "").toString().trim();
@@ -58,7 +57,9 @@ function buildExampleSnapshot(s) {
     detailLevel,
     language,
     products: (products || []).map(p => ({
-      name: p.name, cost: p.cost ?? undefined, price: p.price ?? undefined
+      name: p.name,
+      cost: p.cost ?? undefined,
+      price: p.price ?? undefined
     })),
     constraints,
     notes
@@ -74,7 +75,7 @@ function addExampleIfNew(snapshot) {
   );
   if (!isDup) {
     list.unshift(snapshot);
-    saveExamples(list.slice(0, 25)); // keep latest 25
+    saveExamples(list.slice(0, 25)); 
   }
 }
 
@@ -238,7 +239,6 @@ export default function AppShell() {
   };
   const disableGenerate = useMemo(() => validate().length > 0, [state]);
 
-
   const mapResponse = async (res) => {
     const data = await res.json();
     if (data?.ok && typeof data.content === "string") return data.content;
@@ -278,19 +278,12 @@ export default function AppShell() {
       return;
     }
 
-  
     const withName = {
       ...state,
       businessName: state.businessName?.trim()
         ? state.businessName.trim()
         : suggestName(state.category, state.location)
     };
-
-    
-    if (isCompleteInput(withName)) {
-      const snap = buildExampleSnapshot(withName);
-      addExampleIfNew(snap);
-    }
 
     try {
       const cleaned = {
@@ -322,6 +315,12 @@ export default function AppShell() {
       const planJson = JSON.parse(planString);
       const valid = PlanoraPlan.parse(planJson);
       setPlan(valid);
+
+      
+      if (isCompleteInput(withName)) {
+        const snap = buildExampleSnapshot(withName);
+        addExampleIfNew(snap);
+      }
     } catch (e) {
       console.error(e);
       const msg = pickErrorMessage(e, e?.status, e?.message);
@@ -417,7 +416,7 @@ export default function AppShell() {
 
   return (
     <div>
-      {/* prefetch App on hover (micro-optimization) */}
+      {/* prefetch App on hover  */}
       <Link to="/app" onMouseEnter={() => import("./AppShell.jsx")} className="btn btn--ghost" style={{display:"none"}}>prefetch</Link>
 
       {offline && (
@@ -454,7 +453,7 @@ export default function AppShell() {
                   setState((s) => ({
                     ...s,
                     ...payload,
-                    language, 
+                    language,
                     products:
                       payload.products?.length
                         ? payload.products
@@ -481,9 +480,9 @@ export default function AppShell() {
                   constraints: "",
                   notes: "",
                 });
-                // ensure plan is gone after clearing
+                
                 setPlan(null);
-                // legacy key cleanup if it ever existed
+                
                 localStorage.removeItem("planora:lastPlan");
               }}
             >
@@ -512,7 +511,7 @@ export default function AppShell() {
         </div>
       )}
 
-      {/* Loading overlay  */}
+      {/* Loading overlay */}
       {loading && (
         <div className="overlay" aria-live="polite" aria-busy="true">
           <div className="loader" role="status" aria-label={T.generating ?? "Generating"}>
@@ -540,7 +539,6 @@ export default function AppShell() {
 
       {plan && (
         <Suspense fallback={<div className="card">Loading plan…</div>}>
-          {/* 🔻 only change: pass language */}
           <PlanOutput plan={plan} i18n={T} language={language} />
         </Suspense>
       )}
